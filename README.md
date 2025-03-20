@@ -1,4 +1,4 @@
-# Pylon
+# Pylon (ASP.NET Core Web APIs & .NET Aspire)
 
 Pylon Backend Infrastructure is a modular and extensible backend solution built with ASP.NET Core and .NET Aspire. It is designed to provide a robust foundation for building scalable and maintainable applications while following Clean Architecture principles.
 
