@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="DTOs\" />
+    <Folder Include="Exceptions\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.3.0" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Pylon.Domain\Pylon.Domain.csproj" />
+    <ProjectReference Include="..\Pylon.Infrastructure\Pylon.Infrastructure.csproj" />
+    <ProjectReference Include="..\Pylon.Shared\Pylon.Shared.csproj" />
+  </ItemGroup>
+
+</Project>
