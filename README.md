@@ -1,4 +1,4 @@
-# Pylon App (ASP.NET Core & .NET Aspire)
+# Pylon Backend Infrastructure
 
 Pylon Backend Infrastructure is a modular and extensible backend solution built with ASP.NET Core and .NET Aspire. It is designed to provide a robust foundation for building scalable and maintainable applications while following Clean Architecture principles.
 
@@ -45,7 +45,7 @@ Pylon Backend Infrastructure is a modular and extensible backend solution built 
 └── 📁 Pylon.Web                  # Custom Web Design (PWA Frontend integration)
 ```
 
-## 🧱 Architecture Overview
+## 📐 Architecture Overview
 
 Pylon follows the Clean Architecture pattern, separating core business logic from external concerns for better maintainability and scalability.
 
@@ -96,6 +96,13 @@ docker-compose up -d
 ```
 
 3. **Apply Migrations:**
+
+Create initial migrations if they do not exist:
+```bash
+dotnet ef migrations add InitialCreate --project Pylon.Infrastructure
+```
+
+Update the database:
 ```bash
 dotnet ef database update --project Pylon.Infrastructure
 ```
@@ -105,12 +112,16 @@ dotnet ef database update --project Pylon.Infrastructure
 dotnet run --project Pylon.AppHost
 ```
 
+5. **Access the API:**
+Visit `http://localhost:5000/swagger` for API documentation.
+
 ## 🧪 Running Tests
 ```bash
 dotnet test Pylon.Tests
 ```
 
 ## 📊 Environment Variables
+
 | Key              | Description                  |
 |------------------|------------------------------|
 | `ConnectionStrings:DefaultConnection` | Database connection string |
@@ -124,6 +135,5 @@ dotnet test Pylon.Tests
 ## 🤝 Contributing
 Contributions are welcome! Feel free to fork the repository and submit a pull request.
 
-## 📄 License
-MIT License - See [LICENSE](LICENSE) for details.
-
+## 👤 Creator
+Created and maintained with <3 by Mohammad Nouri (DarvyXe)
