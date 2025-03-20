@@ -1,13 +1,56 @@
-# Pylon Backend Infrastructure
+# Pylon App (ASP.NET Core & .NET Aspire)
 
-A modular, scalable, and reusable backend infrastructure built with **.NET Aspire** and **Clean Architecture**. This project is designed to speed up backend development by providing a solid, extendable foundation for any web application.
+Pylon Backend Infrastructure is a modular and extensible backend solution built with ASP.NET Core and .NET Aspire. It is designed to provide a robust foundation for building scalable and maintainable applications while following Clean Architecture principles.
 
-## 📐 Architecture Overview
-
-Pylon follows the **Clean Architecture** pattern, separating core business logic from external concerns for better maintainability and scalability.
+## 📂 Project Structure
 
 ```
-Pylon.Backend.Infrastructure/
+📦 Pylon Solution
+├── 📁 Pylon.ApiService            # API Gateway (Controllers, Middlewares)
+│    ├── Controllers              # API endpoints
+│    └── Middlewares              # Custom middleware for error handling and logging
+│
+├── 📁 Pylon.AppHost              # Application Orchestration (Aspire-based)
+│
+├── 📁 Pylon.Application          # Application Layer
+│    ├── CustomAttributes         # Custom attributes for validations and annotations
+│    ├── DTOs                     # Data Transfer Objects
+│    ├── Exceptions               # Custom exception handling
+│    ├── Interfaces               # Abstractions and contracts
+│    └── Services                 # Business logic services
+│
+├── 📁 Pylon.Domain               # Domain Layer
+│    ├── Entities                 # Core entities (with BaseEntity)
+│    ├── Enums                    # Enumeration definitions
+│    └── Repositories             # Generic repository interface
+│
+├── 📁 Pylon.Infrastructure       # Infrastructure Layer
+│    ├── Configurations           # Entity Framework configurations
+│    ├── Migrations               # Database migrations (EF Core)
+│    ├── Persistence              # AppDbContext (Database context)
+│    ├── Repositories             # Generic repository implementations
+│    └── Security                 # Authentication and security logic
+│
+├── 📁 Pylon.ServiceDefaults      # Shared service configurations (for Aspire orchestration)
+│
+├── 📁 Pylon.Shared               # Shared Utilities
+│    ├── Constants                # Global constants
+│    ├── Enums                    # Shared enumerations
+│    ├── Helpers                  # Utility classes and methods
+│    └── Logging                  # Logging configuration
+│
+├── 📁 Pylon.Tests                # Unit and Integration Tests
+│    └── Tests                    # Test cases (starting with Repository layer)
+│
+└── 📁 Pylon.Web                  # Custom Web Design (PWA Frontend integration)
+```
+
+## 🧱 Architecture Overview
+
+Pylon follows the Clean Architecture pattern, separating core business logic from external concerns for better maintainability and scalability.
+
+```
+Pylon/
 ├── API/              # ASP.NET Core Web API (Controllers & Middleware)
 ├── Application/      # Business Logic & Service Layer
 ├── Domain/           # Entities, Interfaces, and Core Models
@@ -16,95 +59,71 @@ Pylon.Backend.Infrastructure/
 └── Tests/            # Unit Tests (In Progress)
 ```
 
-## 🚀 Key Features
+- **Pylon.ApiService**: Entry point for external requests via RESTful APIs, responsible for handling HTTP requests, responses, and middleware.
+- **Pylon.Application**: Contains business logic, application services, and DTOs. This layer is decoupled from external frameworks and focuses on core functionalities.
+- **Pylon.Domain**: Represents core business entities, enums, and repository abstractions. This layer is independent of any external technology.
+- **Pylon.Infrastructure**: Handles database interactions (via EF Core), security, and external dependencies. Implements repository interfaces defined in the Domain layer.
+- **Pylon.Shared**: Contains shared utilities, constants, and helper methods that can be used across multiple layers.
+- **Pylon.ServiceDefaults**: Provides shared service configurations for .NET Aspire-based orchestration.
+- **Pylon.AppHost**: The orchestration layer responsible for managing service lifecycles and coordination using .NET Aspire.
+- **Pylon.Web**: Custom frontend for the application, designed as a Progressive Web App (PWA).
 
-- **.NET Aspire** for modern, cloud-native applications
-- **Clean Architecture** with clear separation of concerns
-- **Generic Repository** and **Service Pattern** for code reusability
-- **Custom Middleware** for centralized error handling
-- **Docker** support (coming soon)
-- **Unit Testing** for repository layer (in progress)
+## 🚀 Features
+- **.NET Aspire Integration**: Modern orchestration for distributed and modular applications.
+- **Clean Architecture**: Clear separation of concerns between API, Application, Domain, and Infrastructure layers.
+- **Generic Repository Pattern**: Simplifies database access across the application.
+- **Error Handling Middleware**: Centralized exception management with intelligent error responses.
+- **Docker Support**: Built-in Docker configuration for Redis and API services.
+- **Logging System**: Centralized logging for better traceability and monitoring.
 
-## 🛠️ Getting Started
+## 🛠️ Prerequisites
+- .NET 8.0 or higher
+- Docker (for Redis and service containers)
 
-### Prerequisites
+## 📦 Getting Started
 
-- .NET 8 or higher
-- Docker (optional, for containerized deployment)
-- Git
-
-### Clone the Repository
-
+1. **Clone the Repository:**
 ```bash
-git clone https://github.com/your-username/Pylon.git
+git clone https://github.com/yourusername/Pylon.git
 cd Pylon
 ```
 
-### Setup & Run
-
-1. Restore packages:
-
-```bash
-dotnet restore
-```
-
-2. Apply Migrations (EF Core):
+2. **Run Docker Containers:**
+Ensure Docker is installed and running on your machine.
 
 ```bash
-dotnet ef database update --project src/Infrastructure
+docker-compose up -d
 ```
 
-3. Run the application:
-
+3. **Apply Migrations:**
 ```bash
-dotnet run --project src/API
+dotnet ef database update --project Pylon.Infrastructure
 ```
 
-The API will be available at: `https://localhost:5001`
+4. **Run the Solution:**
+```bash
+dotnet run --project Pylon.AppHost
+```
 
-## 📚 Project Structure
+## 🧪 Running Tests
+```bash
+dotnet test Pylon.Tests
+```
 
-### API Layer
-- Entry point of the application
-- Handles HTTP requests via **Controllers**
-- Includes custom **Middleware** for error handling
+## 📊 Environment Variables
+| Key              | Description                  |
+|------------------|------------------------------|
+| `ConnectionStrings:DefaultConnection` | Database connection string |
+| `Redis:Host`     | Redis server host address    |
 
-### Application Layer
-- Implements business logic
-- Contains **Services** which interact with repositories
-
-### Domain Layer
-- Defines core entities and business rules
-- Includes **BaseEntity** for common properties
-
-### Infrastructure Layer
-- Implements **Generic Repository** pattern
-- Manages **EF Core** DbContext and database interactions
-
-### Shared Layer
-- Contains shared utilities and helper classes
-
-### Tests Layer
-- (In Progress) Unit tests for core services and repositories
-
-## 📦 Docker Support (Coming Soon)
-
-A `Dockerfile` will be added to enable easy containerization of the application.
-
-## 📊 Future Improvements
-
-- Implement UnitOfWork pattern (optional based on business needs)
-- Complete unit testing for repositories and services
-- Dockerize the entire solution
+## 📖 Future Enhancements
+- Implementing Unit of Work (UoW) pattern
+- Advanced logging and tracing
+- Enhanced security and authentication mechanisms
 
 ## 🤝 Contributing
+Contributions are welcome! Feel free to fork the repository and submit a pull request.
 
-Contributions are welcome! Feel free to fork this repository and submit pull requests.
+## 📄 License
+MIT License - See [LICENSE](LICENSE) for details.
 
-## 📜 License
-
-This project is licensed under the **MIT License**. See the [LICENSE](LICENSE) file for more details.
-
----
-
-Happy coding! 💻
