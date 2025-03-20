@@ -112,9 +112,6 @@ dotnet ef database update --project Pylon.Infrastructure
 dotnet run --project Pylon.AppHost
 ```
 
-5. **Access the API:**
-Visit `http://localhost:5000/swagger` for API documentation.
-
 ## 🧪 Running Tests
 ```bash
 dotnet test Pylon.Tests
